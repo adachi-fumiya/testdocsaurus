@@ -39,9 +39,18 @@ const config = {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
-            id: "sample_file",
-            spec: "docs/api/shape.yaml",
-            // spec: "https://redocly.github.io/redoc/openapi.yaml",
+            id: "extreme",
+            spec: `docs/api/course/extreme.yml`,
+            route: "/api/",
+          },
+          {
+            id: "pattern",
+            spec: `docs/api/course/pattern.yml`,
+            route: "/api/",
+          },
+          {
+            id: "shape",
+            spec: `docs/api/shape.yml`,
             route: "/api/",
           },
         ],
@@ -80,6 +89,11 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      colorMode: {
+        defaultMode: 'dark',
+        disableSwitch: false,
+        respectPrefersColorScheme: false,
+      },
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
@@ -96,12 +110,19 @@ const config = {
           //   label: 'Tutorial',
           // },
           // {to: '/blog', label: 'Blog', position: 'left'},
+          // Topページのheaderに表示されるもの。
           {
             type: "doc",
-            docId: "api/shape",
+            docId: "api/course/extreme",
             position: "left",
             label: "mixwayAPI",
           },
+          // {
+          //   type: "doc",
+          //   docId: "api/shape",
+          //   position: "left",
+          //   label: "shape",
+          // },
           // {
           //   href: 'https://github.com/facebook/docusaurus',
           //   label: 'GitHub',
