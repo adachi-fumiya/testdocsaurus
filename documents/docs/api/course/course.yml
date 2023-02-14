@@ -1,0 +1,13 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: mixway API Documents
+servers:
+  - url: https://mixway.ekispert.jp
+security:
+  - ApiKeyAuth: []
+paths:
+  /v1/json/course/extreme:
+    $ref: ./extreme.yml
+  /v1/json/course/pattern:
+    $ref: ./pattern.yml

@@ -39,20 +39,20 @@ const config = {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
-            id: "extreme",
-            spec: `docs/api/course/extreme.yml`,
+            id: "course",
+            spec: `docs/api/course/course.yml`,
             route: "/api/",
           },
-          {
-            id: "pattern",
-            spec: `docs/api/course/pattern.yml`,
-            route: "/api/",
-          },
-          {
-            id: "shape",
-            spec: `docs/api/shape.yml`,
-            route: "/api/",
-          },
+          // {
+          //   id: "pattern",
+          //   spec: `docs/api/course/pattern.yml`,
+          //   route: "/api/",
+          // },
+          // {
+          //   id: "shape",
+          //   spec: `docs/api/course/shape.yml`,
+          //   route: "/api/",
+          // },
         ],
         // Theme Options for modifying how redoc renders them
         theme: {
@@ -113,7 +113,7 @@ const config = {
           // Topページのheaderに表示されるもの。
           {
             type: "doc",
-            docId: "api/course/extreme",
+            docId: "api/course/course",
             position: "left",
             label: "mixwayAPI",
           },
