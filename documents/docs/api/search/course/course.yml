@@ -11,3 +11,5 @@ paths:
     $ref: ./extreme.yml
   /v1/json/search/course/pattern:
     $ref: ./pattern.yml
+  /v1/json/course/shape:
+    $ref: ./shape.yml

@@ -40,7 +40,7 @@ const config = {
         specs: [
           {
             id: "course",
-            spec: `docs/api/course/course.yml`,
+            spec: `docs/api/search/course/course.yml`,
             route: "/api/",
           },
           // {
@@ -113,9 +113,9 @@ const config = {
           // Topページのheaderに表示されるもの。
           {
             type: "doc",
-            docId: "api/course/course",
+            docId: "api/search/course/course",
             position: "left",
-            label: "mixwayAPI",
+            label: "API",
           },
           // {
           //   type: "doc",
