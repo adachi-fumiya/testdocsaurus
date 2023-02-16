@@ -1,6 +1,7 @@
 get:
   tags:
-    - 【extreme】経路探索
+    - 探索
+  summary: "経路探索"
   description: |-
     ### 概要
     
