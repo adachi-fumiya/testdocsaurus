@@ -44,7 +44,7 @@ const config = {
           //   route: "/api/",
           // },
           {
-            id: "course1",
+            id: "api",
             spec: `api/search/course/course.yml`,
             route: "/api/",
           },
@@ -114,7 +114,7 @@ const config = {
           //   position: 'left',
           //   label: 'Tutorial',
           // },
-          // {to: '/blog', label: 'Blog', position: 'left'},
+          // {to: '/blog', label: 'Tips', position: 'left'},
           // Topページのheaderに表示されるもの。
           // {
           //   type: "doc",
@@ -123,6 +123,13 @@ const config = {
           //   label: "API",
           // },
           {to: '/api', label: 'API', position: 'left'},
+          // {to: '/blog', label: 'Tips', position: 'left'},
+          {
+            type: "doc",
+            docId: "tips/index",
+            position: "left",
+            label: "Tips",
+        },
           // {
           //   type: "doc",
           //   docId: "api/shape",
