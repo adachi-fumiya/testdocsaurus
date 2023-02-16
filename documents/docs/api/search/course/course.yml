@@ -13,3 +13,7 @@ paths:
     $ref: ./pattern.yml
   /v1/json/course/shape:
     $ref: ./shape.yml
+  /v1/json/course/station:
+    $ref: ../../course/station.yml
+  /v1/json/course/passStation:
+    $ref: ../../course/passStation.yml
