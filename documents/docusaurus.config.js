@@ -38,9 +38,14 @@ const config = {
       {
         // Plugin Options for loading OpenAPI files
         specs: [
+          // {
+          //   id: "course",
+          //   spec: `docs/api/search/course/course.yml`,
+          //   route: "/api/",
+          // },
           {
-            id: "course",
-            spec: `docs/api/search/course/course.yml`,
+            id: "course1",
+            spec: `api/search/course/course.yml`,
             route: "/api/",
           },
           // {
@@ -111,12 +116,13 @@ const config = {
           // },
           // {to: '/blog', label: 'Blog', position: 'left'},
           // Topページのheaderに表示されるもの。
-          {
-            type: "doc",
-            docId: "api/search/course/course",
-            position: "left",
-            label: "API",
-          },
+          // {
+          //   type: "doc",
+          //   docId: "api/search/course/course",
+          //   position: "left",
+          //   label: "API",
+          // },
+          {to: '/api', label: 'API', position: 'left'},
           // {
           //   type: "doc",
           //   docId: "api/shape",
