@@ -5,13 +5,9 @@ frontend:
       commands:
         - npm install
     build:
-      commands:
+      commands: 
         - npm run build
   artifacts:
-    # IMPORTANT - Please verify your build output directory
-    baseDirector: build/
+    baseDirectory: /build
     files:
       - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
