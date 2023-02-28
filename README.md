@@ -1,41 +1,51 @@
-# Website
+# mixway-API-Docs
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
-
-### Installation
-
+## 初回起動時
+- Node.js version 16.14以上
 ```
-$ yarn
+npm install
 ```
 
-### Local Development
-
+## local起動時
 ```
-$ yarn start
-```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
-
-```
-$ yarn build
+npm start
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+## deploy方法
+masterが更新されると、環境へデプロイされます (powered by Amplify)
 
-### Deployment
+- [Amplify構築手順](https://mixway.esa.io/posts/130)
 
-Using SSH:
+## APIドキュメントの追加手順
+1. `/api`に各APIのymlを追加。
+APIが`https://mixway.ekispert.jp/v1/json/search/course/extreme`の場合、
+`/api/search/courseにextreme.yml`を追加する。
 
+2. `/api/api.yml`のpathsに先程追加したymlを追記する。
+```yml:/api/api.yml
+paths:
+  /v1/json/search/course/extreme:
+    $ref: search/course/extreme.yml
 ```
-$ USE_SSH=true yarn deploy
-```
 
-Not using SSH:
-
+## ディレクトリ構成
 ```
-$ GIT_USER=<Your GitHub username> yarn deploy
+.
+├── api   APIのymlを格納するディレクトリ
+│   ├── course
+│   ├── point
+│   └── search/course
+│            └── 各APIのyml
+│   
+│
+├── docs    Tipsのmdを格納するディレクトリ
+│   ├── teiki
+│            ├── create-teiki.md
+│   │       └── category.json   サイドバーに表示するタイトルや順番を設定
+│   └── tips
+│            ├── index.md
+│            └── category.json 
+│
+├── amplify.yml   Amplifyの設定ファイル
+└── docusaurus.config.js    docusaurusの設定ファイル
 ```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
