@@ -8,12 +8,12 @@ security:
   - ApiKeyAuth: []
 paths:
   /v1/json/search/course/extreme:
-    $ref: ./extreme.yml
+    $ref: search/course/extreme.yml
   /v1/json/search/course/pattern:
-    $ref: ./pattern.yml
+    $ref: search/course/pattern.yml
   /v1/json/course/shape:
-    $ref: ./shape.yml
+    $ref: search/course/shape.yml
   /v1/json/course/station:
-    $ref: ../../course/station.yml
+    $ref: course/station.yml
   /v1/json/course/passStation:
-    $ref: ../../course/passStation.yml
+    $ref: course/passStation.yml

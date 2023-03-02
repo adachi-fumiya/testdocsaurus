@@ -45,7 +45,7 @@ const config = {
           // },
           {
             id: "api",
-            spec: `api/search/course/course.yml`,
+            spec: `api/api.yml`,
             route: "/api/",
           },
           // {
