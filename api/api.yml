@@ -33,3 +33,5 @@ paths: # pathsの並び順でサイドバーに表示される。
     $ref: point/light.yml
   /v1/json/rail:
     $ref: rail.yml
+  /v1/json/condition:
+    $ref: condition.yml
