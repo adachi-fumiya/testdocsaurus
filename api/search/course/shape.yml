@@ -1,6 +1,6 @@
 get:
   tags: 
-    - 経路探索結果のシェイプ情報
+    - 駅の情報
   summary: 経路探索結果のシェイプ情報
   description: |-
     ### 概要
