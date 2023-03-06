@@ -488,10 +488,11 @@ get:
   responses:
     '200':
       description: 正常レスポンスの場合
-      #content:
-      #  application/json:
-      #    schema:
-      #      $ref: "#/components/schemas/Response_of_success"
+      content:
+        application/json:
+          schema:
+            properties:
+              $ref: ../../components/response/success/extreme.yml
 components:
 securitySchemes:
 ApiKeyAuth:        # arbitrary name for the security scheme
@@ -505,7 +506,6 @@ Response_of_success:
   required:
     - ResultSet
   properties:
-    ResultSet:
       type: object
       additionalProperties: false
       properties:

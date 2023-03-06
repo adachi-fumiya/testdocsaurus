@@ -1,0 +1,947 @@
+ResultSet:
+  type: object
+  additionalProperties: false
+  properties:
+    apiVersion:
+      type: string
+      description: WebAPIバージョン
+    engineVersion:
+      type: string
+      description: エンジンバージョン
+    Course:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          dataType:
+            type: string
+            description: |-
+              時刻を元にした探索結果かどうか。
+              - onTimetable: 時刻に基づく探索
+              - plain:[平均待ち時間による探索](http://docs.ekispert.com/v1/dictionary/search-course-by-average-time/)
+          searchType:
+            type: string
+            description: |-
+              [探索種別](http://docs.ekispert.com/v1/dictionary/search-type/)
+          PassStatus:
+            type: object
+            additionalProperties: false
+            description: |-
+              定期券の状態を表す要素
+            properties:
+              kind:
+                type: string
+                description: |-
+                  状態の種類。
+                  - vehicle: 定期券で利用できる車両
+                    　・「普通」or「グリーン」
+                    　など
+                  - nikukanteiki: 定期券の種類 (二区間定期券）
+                    　・「区間外定期」or「ＪＲ二区間定期」
+                    　・「一般定期」or「２ルート定期」（例: 二区間定期券 / だぶるーと / Oneだぶる♪ / など）
+                    　など
+              selected:
+                type: string
+                description: |-
+                  選択状態。
+                  - true: 定期券の金額計算に反映されている
+                  - false: 反映されていない
+              teiki1Index:
+                type: string
+                description: |-
+                  この要素が表している１ヶ月定期券のインデックス
+              teiki3Index:
+                type: string
+                description: |-
+                  この要素が表している３ヶ月定期券のインデックス
+              teiki6Index:
+                type: string
+                description: |-
+                  この要素が表している６ヶ月定期券のインデックス
+              teiki12Index:
+                type: string
+                description: |-
+                  この要素が表している１２ヶ月定期券のインデックス
+              Comment:
+                type: string
+                description: |-
+                  コメント文字列を表す要素
+              Name:
+                type: string
+                description: |-
+                  名称を表す要素
+              Type:
+                type: string
+                description: |-
+                  種別を表す要素
+          Price:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              description: |-
+                金額を表す要素
+              properties:
+                fareRevisionStatus:
+                  type: string
+                  description: |-
+                    運賃改定の状態。
+                    - none: 掲示すべき内容が特にない状態
+                    - salesTaxRateIsNotSupported: 消費税率の引き上げに関する運賃改定には対応していない
+                fromLineIndex:
+                  type: string
+                  description: |-
+                    開始[区間インデックス](http://docs.ekispert.com/v1/dictionary/section-index/)
+                index:
+                  type: string
+                  description: |-
+                    区間と金額を紐づけるインデックスです。`ResultSet / Course / Price / kind`の値によって紐づく金額の種類が変わります。紐づく金額の種類は以下の通りです。
+                    - `ResultSet / Course / Route / Line / fareIndex`
+                    - `ResultSet / Course / Route / Line / chargeIndex`
+                    - `ResultSet / Course / Route / Line / teiki1Index`
+                    - `ResultSet / Course / Route / Line / teiki3Index`
+                    - `ResultSet / Course / Route / Line / teiki6Index`
+                    - `ResultSet / Course / Route / Line / teiki12Index`
+                kind:
+                  type: string
+                  description: |-
+                    [金額種別](http://docs.ekispert.com/v1/dictionary/money-type/)。
+                    - Fare: 運賃
+                    - Charge: 料金
+                    - Teiki1: １ヶ月定期券
+                    - Teiki3: ３ヶ月定期券
+                    - Teiki6: ６ヶ月定期券
+                    - Teiki12: １２ヶ月定期券
+                    - ~Summary: 各金額種別の合計
+                nikukanteikiIndex:
+                  type: string
+                  description: |-
+                    定期券の二区間定期券情報インデックス
+                relationIndex:
+                  type: string
+                  description: |-
+                    関係インデックス
+                selected:
+                  type: string
+                  description: |-
+                    選択状態。
+                    - true: 合計金額の計算に含まれている
+                    - false: 合計金額の計算に含まれていない
+                toLineIndex:
+                  type: string
+                  description: |-
+                    終了[区間インデックス](http://docs.ekispert.com/v1/dictionary/section-index/)
+                vehicleIndex:
+                  type: string
+                  description: |-
+                    定期券の車両情報インデックス
+                Name:
+                  type: string
+                  description: |-
+                    名称を表す要素
+                Oneway:
+                  oneOf:
+                    - type: string
+                      description: |-
+                        片道を表す要素
+                    - type: object
+                      additionalProperties: false
+                      description: |-
+                        片道を表す要素
+                      properties:
+                        fullRemark:
+                          type: string
+                          description: |-
+                            詳細な追加情報
+                        remark:
+                          type: string
+                          description: |-
+                            追加情報
+                        expectedFullRemark:
+                          type: string
+                          description: |-
+                            ユーザが指定した詳細な追加情報。
+                            ※ 詳しくは[エクスプレス予約](http://docs.ekispert.com/v1/dictionary/express-reservation-service/)の「[探索条件の指定とは別の割引が適用された場合](http://docs.ekispert.com/v1/dictionary/express-reservation-service/#%E6%8E%A2%E7%B4%A2%E6%9D%A1%E4%BB%B6%E3%81%AE%E6%8C%87%E5%AE%9A%E3%81%A8%E3%81%AF%E5%88%A5%E3%81%AE%E5%89%B2%E5%BC%95%E3%81%8C%E9%81%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%81%9F%E5%A0%B4%E5%90%88)」をご確認ください。
+                        expectedRemark:
+                          type: string
+                          description: |-
+                            ユーザが指定した詳細な追加情報。
+                            ※ 詳しくは[エクスプレス予約](http://docs.ekispert.com/v1/dictionary/express-reservation-service/)の「[探索条件の指定とは別の割引が適用された場合](http://docs.ekispert.com/v1/dictionary/express-reservation-service/#%E6%8E%A2%E7%B4%A2%E6%9D%A1%E4%BB%B6%E3%81%AE%E6%8C%87%E5%AE%9A%E3%81%A8%E3%81%AF%E5%88%A5%E3%81%AE%E5%89%B2%E5%BC%95%E3%81%8C%E9%81%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%81%9F%E5%A0%B4%E5%90%88)」をご確認ください。
+                        includedInCharge:
+                          type: string
+                          description: |-
+                            運賃が料金に含まれるかどうか。trueのみを返します
+                            - true: 運賃が料金に含まれます
+                            ※ 詳しくは[エクスプレス予約](http://docs.ekispert.com/v1/dictionary/express-reservation-service/)をご確認ください。
+                Rate:
+                  type: object
+                  additionalProperties: false
+                  description: |-
+                    繁忙・閑散期を表す要素。ＪＲ季節料金を考慮する場合に有効です。
+                    - High: 繁忙期
+                    - Low: 閑散期
+                    - Regular: 通常期
+                  properties:
+                    area:
+                      type: string
+                      description: |-
+                        ＪＲの繁忙・閑散期の区分。
+                        - Hokkaido: ＪＲ北海道のみ
+                        - Kyusyu: ＪＲ九州のみ
+                        - Main: 本州３社・ＪＲ四国・ＪＲ各会社間
+                        - None: 指定なし
+                RevisionStatus:
+                  type: string
+                  description: |-
+                    事業者の金額改定への対応状況を表す要素
+                    - latest: 最新の改定に対応済み
+                    - previous: 改定に未対応
+                    - forecast: [見込の金額](https://ekiworld.net/170131_new_eki)を利用
+                RevisionStatusComment:
+                  type: string
+                  description: |-
+                    事業者の改定への対応状況についての説明を表す要素
+                Round:
+                  oneOf:
+                    - type: string
+                      description: |-
+                        往復を表す要素
+                    - type: object
+                      additionalProperties: false
+                      description: |-
+                        往復を表す要素
+                      properties:
+                        fullRemark:
+                          type: string
+                          description: |-
+                            詳細な追加情報
+                        remark:
+                          type: string
+                          description: |-
+                            追加情報
+                        expectedFullRemark:
+                          type: string
+                          description: |-
+                            ユーザが指定した詳細な追加情報。
+                            ※ 詳しくは[エクスプレス予約](http://docs.ekispert.com/v1/dictionary/express-reservation-service/)の「[探索条件の指定とは別の割引が適用された場合](http://docs.ekispert.com/v1/dictionary/express-reservation-service/#%E6%8E%A2%E7%B4%A2%E6%9D%A1%E4%BB%B6%E3%81%AE%E6%8C%87%E5%AE%9A%E3%81%A8%E3%81%AF%E5%88%A5%E3%81%AE%E5%89%B2%E5%BC%95%E3%81%8C%E9%81%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%81%9F%E5%A0%B4%E5%90%88)」をご確認ください。
+                        expectedRemark:
+                          type: string
+                          description: |-
+                            ユーザが指定した詳細な追加情報。
+                            ※ 詳しくは[エクスプレス予約](http://docs.ekispert.com/v1/dictionary/express-reservation-service/)の「[探索条件の指定とは別の割引が適用された場合](http://docs.ekispert.com/v1/dictionary/express-reservation-service/#%E6%8E%A2%E7%B4%A2%E6%9D%A1%E4%BB%B6%E3%81%AE%E6%8C%87%E5%AE%9A%E3%81%A8%E3%81%AF%E5%88%A5%E3%81%AE%E5%89%B2%E5%BC%95%E3%81%8C%E9%81%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%81%9F%E5%A0%B4%E5%90%88)」をご確認ください。
+                        includedInCharge:
+                          type: string
+                          description: |-
+                            運賃が料金に含まれるかどうか。trueのみを返します
+                            - true: 運賃が料金に含まれます
+                            ※ 詳しくは[エクスプレス予約](http://docs.ekispert.com/v1/dictionary/express-reservation-service/)をご確認ください。
+                Type:
+                  type: string
+                  description: |-
+                    種類を表す要素。
+                    - Fare: 普通乗車券
+                    - FareICCard: ICカード乗車券
+                    - Free: 自由席
+                    - Reserved: 指定席
+                    - Green: グリーン席 / グリーン(事前購入時)
+                    - GreenInCar: グリーン(車内購入時)
+                    - Special: 特定特急料金
+                    - Bed: 寝台
+                    - Car: 寝台以外の有料車両
+                    - Stand: 立ち席
+                    - GranClass: グランクラス
+                    - Swallow: スワローあかぎ
+                    - InCar: 指定席(車内購入時)
+                    - NoneReserved: 座席未指定席
+                    - Teiki1: １ヶ月定期券
+                    - Teiki3: ３ヶ月定期券
+                    - Teiki6: ６ヶ月定期券
+                    - Teiki12: １２ヶ月定期券
+                    - WithTeiki: 定期券利用
+                    - WithCoupon: 回数券利用
+                target: # closedのみの要素
+                  type: string
+                  description: |-
+                    金額の対象(者)
+          Relation:
+            type: object
+            additionalProperties: false
+            description: |-
+              関係を表す要素
+            properties:
+              Name:
+                type: string
+                description: |-
+                  名称を表す要素
+              PriceRelation:
+                type: object
+                additionalProperties: false
+                description: |-
+                  金額の関係を表す要素
+                properties:
+                  kind:
+                    type: string
+                    description: |-
+                      [金額種別](http://docs.ekispert.com/v1/dictionary/money-type/)
+          Route:
+            type: object
+            additionalProperties: false
+            description: |-
+              経路探索結果の経路のみを表す要素
+            properties:
+              distance:
+                type: string
+                description: |-
+                  経路の距離。<br>
+                  単位: 100m<br>
+              timeOnBoard:
+                type: string
+                description: |-
+                  経路の乗車時間合計。<br>
+                  単位: 分<br>
+              timeOther:
+                type: string
+                description: |-
+                  経路のその他(列車待ち合わせ時間等)時間合計。<br>
+                  単位: 分<br>
+              timeWalk:
+                type: string
+                description: |-
+                  経路の徒歩時間合計。<br>
+                  単位: 分<br>
+              transferCount:
+                type: string
+                description: |-
+                  経路の乗り換え回数合計
+              Line:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: false
+                  description: |-
+                    区間 を表す要素
+                  properties:
+                    chargeIndex:
+                      type: string
+                      description: |-
+                        料金インデックス
+                    direction:
+                      type: string
+                      description: |-
+                        [平均路線](http://docs.ekispert.com/v1/dictionary/average-rail/)の方向。経路の[平均路線](http://docs.ekispert.com/v1/dictionary/average-rail/)を一つに確定するための情報として、[平均待ち時間による探索](http://docs.ekispert.com/v1/dictionary/search-course-by-average-time/)の結果に対してのみ付加されます。
+                    distance:
+                      type: string
+                      description: |-
+                        区間 の距離。<br>
+                        単位: 100m<br>
+                    fareIndex:
+                      type: string
+                      description: |-
+                        運賃インデックス
+                    stopStationCount:
+                      type: string
+                      description: |-
+                        列車が停止する[駅](http://docs.ekispert.com/v1/dictionary/station/)の数
+                    hasDiagram: # closedのみの要素
+                      type: string
+                      description: |-
+                        ダイヤ対応の有無
+                    teiki1Index:
+                      type: string
+                      description: |-
+                        １ヶ月定期代インデックス
+                    teiki3Index:
+                      type: string
+                      description: |-
+                        ３ヶ月定期代インデックス
+                    teiki6Index:
+                      type: string
+                      description: |-
+                        ６ヶ月定期代インデックス
+                    teiki12Index:
+                      type: string
+                      description: |-
+                        １２ヶ月定期代インデックス
+                    timeOnBoard:
+                      type: string
+                      description: |-
+                        区間の乗車時間合計。<br>
+                        ※徒歩区間の場合は徒歩時間<br>
+                        単位: 分<br>
+                    track:
+                      type: string
+                      description: |-
+                        [軌道種別](http://docs.ekispert.com/v1/dictionary/track-type/)
+                    ArrivalState:
+                      type: object
+                      additionalProperties: false
+                      description: |-
+                        到着時の状態を表す要素
+                      properties:
+                        no:
+                          type: string
+                          description: |-
+                            到着番線、番号等
+                        Datetime:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            text:
+                              type: string
+                              description: |-
+                                日時を表す要素
+                            operation:
+                              type: string
+                              description: |-
+                                運行日判定。
+                                - today: 日時通り
+                                - yesterday: 前日
+                        Gate:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            GeoPoint:
+                              type: object
+                              additionalProperties: false
+                              properties:
+                                gcs:
+                                  type: string
+                                  description: |-
+                                    測地系
+                                lati:
+                                  type: string
+                                  description: |-
+                                    緯度。<br>
+                                    Format: 度.分.秒.100分の1秒<br>
+                                lati_d:
+                                  type: string
+                                  description: |-
+                                    緯度。<br>
+                                    Format: 度<br>
+                                longi:
+                                  type: string
+                                  description: |-
+                                    経度。<br>
+                                    Format: 度.分.秒.100分の1秒<br>
+                                longi_d:
+                                  type: string
+                                  description: |-
+                                    経度。<br>
+                                    Format: 度<br>
+                            Name:
+                              type: string
+                              description: |-
+                                [出口](http://docs.ekispert.com/v1/dictionary/gate/)の名称を表す要素
+                            code:
+                              type: string
+                              description: |-
+                                出口コード
+                            groupCode:
+                              type: string
+                              description: |-
+                                出口グループコード
+                        Type:
+                          type: string
+                          description: |-
+                            駅の状態を表す要素
+                    Color:
+                      type: string
+                      description: |-
+                        路線カラーを表す要素（10進数によるRGB形式） <br>
+                        Format: RRRGGGBBB<br>
+                    Corporation:
+                      type: object
+                      additionalProperties: false
+                      description: |-
+                        [会社](http://docs.ekispert.com/v1/dictionary/corporation/)を表す要素。<br>
+                        ※ resultDetailにaddCorporationを指定時付与<br>
+                      properties:
+                        Name:
+                          type: string
+                          description: |-
+                            [会社](http://docs.ekispert.com/v1/dictionary/corporation/)の名称を表す要素
+                    DepartureState:
+                      type: object
+                      additionalProperties: false
+                      description: |-
+                        出発時の状態を表す要素
+                      properties:
+                        no:
+                          type: string
+                          description: |-
+                            出発番線、番号等
+                        Datetime:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            text:
+                              type: string
+                              description: |-
+                                日時を表す要素
+                            operation:
+                              type: string
+                              description: |-
+                                運行日判定。
+                                - today: 日時通り
+                                - yesterday: 前日
+                        Gate:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            GeoPoint:
+                              type: object
+                              additionalProperties: false
+                              properties:
+                                gcs:
+                                  type: string
+                                  description: |-
+                                    測地系
+                                lati:
+                                  type: string
+                                  description: |-
+                                    緯度。<br>
+                                    Format: 度.分.秒.100分の1秒<br>
+                                lati_d:
+                                  type: string
+                                  description: |-
+                                    緯度。<br>
+                                    Format: 度<br>
+                                longi:
+                                  type: string
+                                  description: |-
+                                    経度。<br>
+                                    Format: 度.分.秒.100分の1秒<br>
+                                longi_d:
+                                  type: string
+                                  description: |-
+                                    経度。<br>
+                                    Format: 度<br>
+                            Name:
+                              type: string
+                              description: |-
+                                [出口](http://docs.ekispert.com/v1/dictionary/gate/)の名称を表す要素
+                            code:
+                              type: string
+                              description: |-
+                                出口コード
+                            groupCode:
+                              type: string
+                              description: |-
+                                出口グループコード
+                        Type:
+                          type: string
+                          description: |-
+                            駅の状態を表す要素
+                    Destination:
+                      type: string
+                      description: |-
+                        列車の行き先を表す要素
+                    LineSymbol:
+                      type: object
+                      additionalProperties: false
+                      description: |-
+                        [路線記号](http://docs.ekispert.com/v1/dictionary/line-symbol/)を表す要素
+                      properties:
+                        code:
+                          type: string
+                          description: |-
+                            路線記号コード。[路線記号](http://docs.ekispert.com/v1/dictionary/line-symbol/)が表す路線と1対1で紐付く一意のコードです。
+                        Name:
+                          type: string
+                          description: |-
+                            [路線記号](http://docs.ekispert.com/v1/dictionary/line-symbol/)の名称を表す要素
+                    Name:
+                      type: string
+                      description: |-
+                        路線の名称を表す要素
+                    Number:
+                      type: string
+                      description: |-
+                        番号(号、便など)を表す要素
+                    Stop:
+                      type: object
+                      additionalProperties: false
+                      description: |-
+                        停車を表す要素
+                      properties:
+                        ArrivalState:
+                          type: object
+                          additionalProperties: false
+                          description: |-
+                            到着時の状態を表す要素
+                          properties:
+                            Datetime:
+                              type: object
+                              additionalProperties: false
+                              properties:
+                                text:
+                                  type: string
+                                  description: |-
+                                    時刻を表す要素。<br>
+                                    Format: hh:mm:ss+09:00<br>
+                                operation:
+                                  type: string
+                                  description: |-
+                                    運行日判定
+                                    - today: 日時通り
+                                    - yesterday: 前日
+                        DepartureState:
+                          type: object
+                          additionalProperties: false
+                          description: |-
+                            出発時の状態を表す要素
+                          properties:
+                            Datetime:
+                              type: object
+                              additionalProperties: false
+                              properties:
+                                text:
+                                  type: string
+                                  description: |-
+                                    時刻を表す要素。<br>
+                                    Format: hh:mm:ss+09:00<br>
+                                operation:
+                                  type: string
+                                  description: |-
+                                    運行日判定
+                                    - today: 日時通り
+                                    - yesterday: 前日
+                        Point:
+                          type: array
+                          items:
+                            type: object
+                            additionalProperties: false
+                            description: |-
+                              地点 を表す要素
+                            properties:
+                              getOff:
+                                type: string
+                                description: |-
+                                  降車可能フラグ
+                                    - true: 可能
+                                    - false: 不可能
+                              getOn:
+                                type: string
+                                description: |-
+                                  乗車可能フラグ
+                                    - true: 可能
+                                    - false: 不可能
+                              Prefecture:
+                                type: object
+                                additionalProperties: false
+                                description: |-
+                                  都道府県を表す要素
+                                properties:
+                                  code:
+                                    type: string
+                                    description: |-
+                                      [都道府県コード](http://docs.ekispert.com/v1/dictionary/prefecture-code/)
+                                  Name:
+                                    type: string
+                                    description: |-
+                                      都道府県の名称を表す要素
+                              Station:
+                                type: object
+                                additionalProperties: false
+                                description: |-
+                                  [駅](http://docs.ekispert.com/v1/dictionary/station/)を表す要素
+                                properties:
+                                  code:
+                                    type: string
+                                    description: |-
+                                      [駅コード](http://docs.ekispert.com/v1/dictionary/station-code/)
+                                  Name:
+                                    type: string
+                                    description: |-
+                                      [駅の名称](http://docs.ekispert.com/v1/dictionary/station-name/)
+                    TimeReliability:
+                      type: string
+                      description: |-
+                        発着時刻の信頼度を表す要素。
+                        - none: 時刻なし
+                        - onTimetable: 時刻表通り
+                        - interval: 一定間隔で運行
+                        - outside: 有効期限外の時刻表時刻
+                        - average: 時刻表ではなく平均的に求められた時刻
+                    Type:
+                      oneOf:
+                        - type: string
+                          description: |-
+                            [交通種別](http://docs.ekispert.com/v1/dictionary/type/)を表す要素
+                        - type: object
+                          additionalProperties: false
+                          properties:
+                            text:
+                              type: string
+                              description: |-
+                                [交通種別](http://docs.ekispert.com/v1/dictionary/type/)を表す要素
+                            trainType:
+                              type: string
+                              description: |-
+                                [交通種別](http://docs.ekispert.com/v1/dictionary/type/)の詳細または[詳細路線種別](http://docs.ekispert.com/v1/dictionary/detail-rail-type/)
+                    TypicalName:
+                      type: string
+                      description: |-
+                        代表名称を表す要素
+                    trainID: # closedのみの要素
+                      type: string
+                      description: |-
+                        列車番号
+                    InsideInformation: # closedのみの要素
+                      type: object
+                    ServiceInformationRailName: # closedのみの要素
+                      type: string
+              Point:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: false
+                  description: |-
+                    地点 を表す要素
+                  properties:
+                    Name:
+                      type: string
+                      description: |-
+                        [座標情報](http://docs.ekispert.com/v1/dictionary/coordinate-information/)、[住所情報](http://docs.ekispert.com/v1/dictionary/address-information/)または 地点データ を表す要素。
+                        ※ 出発駅、経由駅、到着駅に[座標情報](http://docs.ekispert.com/v1/dictionary/coordinate-information/)、[住所情報](http://docs.ekispert.com/v1/dictionary/address-information/)または 地点データ を指定した場合に付与
+                        ※ [住所情報](http://docs.ekispert.com/v1/dictionary/address-information/)を指定した場合、指定した住所の文字列ではなく、検索に該当した住所の名称になります。
+                    GeoPoint:
+                      type: object
+                      additionalProperties: false
+                      description: |-
+                        座標を表す要素
+                      properties:
+                        gcs:
+                          type: string
+                          description: |-
+                            測地系。
+                            - tokyo: 日本測地系
+                            - wgs84: 世界測地系
+                        lati:
+                          type: string
+                          description: |-
+                            緯度。<br>
+                            Format: 度.分.秒.100分の1秒<br>
+                        lati_d:
+                          type: string
+                          description: |-
+                            緯度。<br>
+                            Format: 度<br>
+                        longi:
+                          type: string
+                          description: |-
+                            経度。<br>
+                            Format: 度.分.秒.100分の1秒<br>
+                        longi_d:
+                          type: string
+                          description: |-
+                            経度。<br>
+                            Format: 度<br>
+                    Prefecture:
+                      type: object
+                      additionalProperties: false
+                      description: |-
+                        都道府県を表す要素。<br>
+                      properties:
+                        code:
+                          type: string
+                          description: |-
+                            [都道府県コード](http://docs.ekispert.com/v1/dictionary/prefecture-code/)
+                        Name:
+                          type: string
+                          description: |-
+                            都道府県の名称を表す要素
+                    Station:
+                      type: object
+                      additionalProperties: false
+                      description: |-
+                        [駅](http://docs.ekispert.com/v1/dictionary/station/)を表す要素
+                      properties:
+                        code:
+                          type: string
+                          description: |-
+                            [駅コード](http://docs.ekispert.com/v1/dictionary/station-code/)
+                        Name:
+                          type: string
+                          description: |-
+                            [駅の名称](http://docs.ekispert.com/v1/dictionary/station-name/)を表す要素
+                        Type:
+                          oneOf:
+                            - type: string
+                              description: |-
+                                [交通種別を表す要素](http://docs.ekispert.com/v1/dictionary/type/)
+                            - type: object
+                              additionalProperties: false
+                              properties:
+                                text:
+                                  type: string
+                                  description: |-
+                                    [交通種別を表す要素](http://docs.ekispert.com/v1/dictionary/type/)
+                                detail:
+                                  type: string
+                                  description: |-
+                                    [交通種別](http://docs.ekispert.com/v1/dictionary/type/)の詳細。複数の場合は`:`区切り。
+                        Yomi:
+                          type: string
+                          description: |-
+                            [駅](http://docs.ekispert.com/v1/dictionary/station/)の読みかなを表す要素
+          SerializeData:
+            type: string
+            description: |-
+              [経路シリアライズデータ](http://docs.ekispert.com/v1/dictionary/teiki-serialize-data/)を表す要素
+          Teiki:
+            type: object
+            additionalProperties: false
+            description: |-
+              定期を表す要素<br>
+              ※ 「駅すぱあと」において、定期として利用可能な経路の場合のみ付加されます。<br>
+            properties:
+              SerializeData:
+                type: string
+                description: |-
+                  [定期経路シリアライズデータ](http://docs.ekispert.com/v1/dictionary/teiki-serialize-data/)を表す要素
+              DisplayRoute:
+                type: string
+                description: |-
+                  定期経路の表示用文字列を表す要素<br>
+                  ※ 定期経路シリアライズデータが表す定期経路を構成する[駅の名称](http://docs.ekispert.com/v1/dictionary/station-name/)と[運行路線](http://docs.ekispert.com/v1/dictionary/service-rail/)名称が`--`区切りで交互に並ぶ文字列。<br>
+                  ※ `ResultSet / Course / Route`が表す経路を構成する駅と路線の並びとは同じにはなりません。<br>
+              DetailRoute:
+                type: string
+                description: |-
+                  [定期経路文字列](http://docs.ekispert.com/v1/dictionary/teiki-detail-route/)を表す要素
+                  [平均待ち時間による探索](http://docs.ekispert.com/v1/dictionary/search-course-by-average-time/)時にのみ返されます。
+          AssignStatus:
+            type: object
+            additionalProperties: false
+            properties:
+              kind:
+                type: string
+                description: |-
+                  割り当て対象種別
+                  - teiki: 定期
+              code:
+                type: string
+                description: |-
+                  経路毎の割り当てステータスコード 
+                  - 0: 正常に定期経路が割り当てられた
+                  - 1: 定期券を利用しても運賃が変わらない、または高くなってしまう
+                  - 2: 定期区間を含む経路が存在しない
+                  - 3: 割引乗車券が含まれる経路のため計算ができない
+                  - 4: 定期経路を再現できない
+                  - 99: 予期しない理由により定期経路が割り当てられない（値に99が返された場合は、info@val.co.jp までフィードバックをお寄せください）
+                    ※ 詳しくは[定期割り当てステータスコード](http://docs.ekispert.com/v1/dictionary/teiki-assign-status/)をご確認ください。
+              requireUpdate:
+                type: string
+                description: |-
+                  [定期情報の更新判定ステータスコード](http://docs.ekispert.com/v1/dictionary/teiki-require-update/)
+                  0以外の場合は[定期情報の更新](http://docs.ekispert.com/v1/tips/update-teiki/)が必要です。
+                    - 0: 更新の必要なし
+                    - 1: 定期経路文字列に旧名称の駅名が指定されている
+                    - 2: 定期経路文字列に指定された駅名が見つからない
+                    - 3: 定期経路文字列に旧名称の路線名が指定されている
+                    - 4: 定期経路文字列に指定された路線名が見つからない
+                    - 5: 定期経路文字列の駅名もしくは路線名の廃止など
+                    - 6: 定期経路シリアライズデータが不正
+          OperationLinePattern:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              description: |-
+                経路の区間に紐づく[運行路線](http://docs.ekispert.com/v1/dictionary/service-rail/)パターンを表す要素。 
+                ※ addOperationLinePatternでtrue設定時付与
+              properties:
+                routeLineIndex:
+                  type: string
+                  description: |-
+                    `ResultSet / Course / Route / Line /index`と紐づくインデックス
+                Point:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    description: |-
+                      地点 を表す要素
+                    properties:
+                      Station:
+                        type: object
+                        additionalProperties: false
+                        description: |-
+                          [駅](http://docs.ekispert.com/v1/dictionary/station/)を表す要素
+                        properties:
+                          code:
+                            type: string
+                            description: |-
+                              [駅コード](http://docs.ekispert.com/v1/dictionary/station-code/)
+                          Name:
+                            type: string
+                            description: |-
+                              [駅の名称](http://docs.ekispert.com/v1/dictionary/station-name/)を表す要素
+                          Type:
+                            oneOf:
+                              - type: string
+                                description: |-
+                                  [交通種別を表す要素](http://docs.ekispert.com/v1/dictionary/type/)
+                              - type: object
+                                additionalProperties: false
+                                properties:
+                                  text:
+                                    type: string
+                                    description: |-
+                                      [交通種別を表す要素](http://docs.ekispert.com/v1/dictionary/type/)
+                                  detail:
+                                    type: string
+                                    description: |-
+                                      [交通種別](http://docs.ekispert.com/v1/dictionary/type/)の詳細。複数の場合は`:`区切り。
+                          Yomi:
+                            type: string
+                            description: |-
+                              [駅](http://docs.ekispert.com/v1/dictionary/station/)の読みかなを表す要素
+                      Prefecture:
+                        type: object
+                        additionalProperties: false
+                        description: |-
+                          都道府県を表す要素
+                        properties:
+                          code:
+                            type: string
+                            description: |-
+                              [都道府県コード](都道府県コード)
+                          Name:
+                            type: string
+                            description: |-
+                              都道府県の名称を表す要素
+                Line:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    description: |-
+                      [運行路線](http://docs.ekispert.com/v1/dictionary/service-rail/)を表す要素
+                    properties:
+                      code:
+                        type: string
+                        description: |-
+                          [運行路線](http://docs.ekispert.com/v1/dictionary/service-rail/)コード
+                      direction:
+                        type: string
+                        description: |-
+                          方向
+                      fromStationPos:
+                        type: string
+                        description: |-
+                          区間発駅番号
+                      toStationPos:
+                        type: string
+                        description: |-
+                          区間着駅番号
+                      track:
+                        type: string
+                        description: |-
+                          [軌道種別](http://docs.ekispert.com/v1/dictionary/track-type/)
+                      Name:
+                        type: string
+                        description: |-
+                          [運行路線](http://docs.ekispert.com/v1/dictionary/service-rail/)名称を表す要素
