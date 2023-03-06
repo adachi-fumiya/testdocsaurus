@@ -25,3 +25,9 @@ paths: # pathsの並び順でサイドバーに表示される。
     $ref: search/course/shape.yml
   /v1/json/course/edit:
     $ref: course/edit.yml
+  /v1/json/geo/point:
+    $ref: geo/point.yml
+  /v1/json/point/detail:
+    $ref: point/detail.yml
+  /v1/json/point/light:
+    $ref: point/light.yml

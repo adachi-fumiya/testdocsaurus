@@ -1,0 +1,134 @@
+get:
+  tags:
+    - ポートの情報
+  summary: 緯度経度からポート情報の検索
+  description: |-
+    ### 概要
+    任意の座標情報から、シェアサイクル・オンデマンド交通のポートまたは駅情報を検索し情報を返します。<br>
+    半径を指定した場合、指定した座標から近い順に返却します。半径を指定しない場合は最寄りの1件を返します。
+
+  parameters:
+    - name: geoPoint
+      description: |-
+        任意の場所の**座標情報**。緯度経度はそれぞれ`,`で連結し使用します。半径(メートル)を指定しない場合は、最寄りの1件を返します。
+        <br /><br />
+        例：<br />
+        半径を指定した場合：`35.706220,139.651652,5000` <br />
+        半径を指定しない場合：`35.706220,139.651652`
+      in: query
+      required: true
+      schema:
+        type: string
+
+    - name: type
+      description: |-
+        駅すぱあとWebサービスの駅の[交通種別](https://docs.ekispert.com/v1/dictionary/type/)に加え、以下の交通種別を付与できます。[複数指定](http://docs.ekispert.com/v1/api/#%E8%A4%87%E6%95%B0%E6%8C%87%E5%AE%9A)可。
+        - `cycle`：シェアサイクルのポート
+        - `demand`：デマンドモビリティのポート
+      in: query
+      required: false
+      schema:
+        type: string
+
+    - name: stationCount
+      description: |-
+        1以上の数値。`geoPoint`で半径を指定した場合に、有効になります。
+      in: query
+      required: false
+      schema:
+        type: integer
+
+    - name: offset
+      description: |-
+        0以上の数値。データの取得開始位置を指定できます。省略可。<br />
+        Default: 0
+      in: query
+      required: false
+      schema:
+        type: integer
+
+    - name: limit
+      description: |-
+        1以上の数値。取得するデータの上限数を指定できます。省略可。<br />
+        Default: 100000
+      in: query
+      required: false
+      schema:
+        type: integer
+
+    - name: portCorporationBind
+      description: |-
+        シェアサイクルやオンデマンド交通の固定会社名。指定された会社のポート情報のみを返します。[複数指定](https://docs.ekispert.com/v1/api/#%E8%A4%87%E6%95%B0%E6%8C%87%E5%AE%9A)可。省略可。省略時は制限の無い通常の探索となります。<br />
+        以下のシェアサイクルとオンデマンド交通の会社名を指定することができます。
+        - DOCOMO
+        - PIPPA
+        - POROCLE
+        - LETSBIKE
+        - KOBELIN
+        - OITACYCLESHARE
+        - MACHINORI
+        - KOMONODEMANDTAXI
+        <br />
+
+        ポート以外の[駅](https://docs.ekispert.com/v1/dictionary/station/)の情報を除外したい場合はtypeパラメータにて対象種別を指定してください。<br />
+        例) シェアサイクルポートのみを取得したい場合：`type=cycle`<br />
+        詳しくはtypeパラメータの説明をご参照ください。
+      in: query
+      required: false
+      schema:
+        type: string
+
+    - name: addInformation
+      description: |-
+        追加情報を返します。[複数指定](https://docs.ekispert.com/v1/api/#%E8%A4%87%E6%95%B0%E6%8C%87%E5%AE%9A)可。省略可。<br />
+        - image: ポートの画像URLがレスポンスに追加されます<br />
+        - availability: ポートの満空情報がレスポンスに追加されます<br />
+        - openingTime: ポートの営業時間がレスポンスに追加されます<br />
+
+        このパラメータは特定のユーザーにのみ許可されています。<br />
+        ご利用をご希望の場合は[お問い合わせ](https://info-mail.val.co.jp/l/413482/2020-07-29/rsdy2f)よりご相談ください。
+      in: query
+      required: false
+      schema:
+        type: string
+
+  responses:
+    '200':
+      description: |-
+        - 本APIのレスポンス構造は駅すぱあとWebサービスの[緯度経度からの周辺駅検索](http://docs.ekispert.com/v1/api/geo/station.html)に、ほぼ準じています。
+        - 測地系は世界測地系(wgs84)固定となります。
+
+        <table class="left">
+        <tr class="label"><th>Name</th><th>Description</th></tr>
+        <tr><th>ResultSet / apiVersion</th><th>WebAPIバージョン</th></tr>
+        <tr><th>ResultSet / engineVersion</th><th>エンジンバージョン</th></tr>
+        <tr><th>ResultSet / offset</th><th>データの取得開始位置</th></tr>
+        <tr><th>ResultSet / limit</th><th>取得するデータの上限数</th></tr>
+        <tr><th>ResultSet / Point</th><th>ポートを表す要素</th></tr>
+        <tr><th>ResultSet / Point / GeoPoint / lati_d</th><th>経度  Format: 度</th></tr>
+        <tr><th>ResultSet / Point / GeoPoint / longi_d</th><th>緯度  Format: 度</th></tr>
+        <tr><th>ResultSet / Point / GeoPoint / gcs</th><th>測地系</th></tr>
+        <tr><th>ResultSet / Point / Station</th><th>ポートの情報を表す要素</th></tr>
+        <tr><th>ResultSet / Point / Station / code</th><th>コード</th></tr>
+        <tr><th>ResultSet / Point / Station / Name</th><th>名称</th></tr>
+        <tr><th>ResultSet / Point / Station / Type</th>
+        <th>
+        交通種別を表す要素<br>駅すぱあとWebサービスの<a href="http://docs.ekispert.com/v1/dictionary/type/">交通種別</a>を表す値に加えて、以下の2種類が返ります。<br />- cycle: シェアサイクルのポート<br /> - demand: デマンドモビリティのポート
+        </th></tr>
+        <tr><th>ResultSet / Point / Corporation</th><th>ポートを所有する事業者を表す要素</th></tr>
+        <tr><th>ResultSet / Point / Corporation / code</th><th>ポートを所有する事業者のコード</th></tr>
+        <tr><th>ResultSet / Point / Corporation / Name</th><th>ポートを所有する事業者の名称</th></tr>
+        <tr><th>ResultSet / Point / Distance</th><th>任意の場所からの距離(単位：メートル)</th></tr>
+        <tr><th>ResultSet / Point / Region</th><th>ポートが所属する地域を表す要素</th></tr>
+        <tr><th>ResultSet / Point / Region / code</th><th>ポートが所属する地域を表すコード</th></tr>
+        <tr><th>ResultSet / Point / AdditionalInformation</th><th>追加情報を表す要素</th></tr>
+        <tr><th>ResultSet / Point / AdditionalInformation / imageUrl</th><th>ポートの画像URL</th></tr>
+        <tr><th>ResultSet / Point / AdditionalInformation / Availability</th><th>ポートの満空情報</th></tr>
+        <tr><th>ResultSet / Point / AdditionalInformation / Availability / allNum</th><th>ポートのラック総数</th></tr>
+        <tr><th>ResultSet / Point / AdditionalInformation / Availability / stockNum</th><th>利用可能な車両数</th></tr>
+        <tr><th>ResultSet / Point / AdditionalInformation / Availability / emptyNum</th><th>空いているラック数</th></tr>
+        <tr><th>ResultSet / Point / AdditionalInformation / Availability / returnableUnlimited</th><th>無制限に返却可能かどうかを表すフラグ<br />- true: 空きラック数に関わらず返却可能<br /> - false: ラック数を超える返却は不可</th></tr>
+        <tr><th>ResultSet / Point / AdditionalInformation / OpeningTime</th><th>ポートの営業時間</th></tr>
+        <tr><th>ResultSet / Point / AdditionalInformation / OpeningTime / start</th><th>営業開始時刻</th></tr>
+        <tr><th>ResultSet / Point / AdditionalInformation / OpeningTime / end</th><th>営業終了時刻</th></tr>
+        </table>
