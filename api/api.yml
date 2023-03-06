@@ -6,22 +6,22 @@ servers:
   - url: https://mixway.ekispert.jp
 security:
   - ApiKeyAuth: []
-paths:
+paths: # pathsの並び順でサイドバーに表示される。
   /v1/json/search/course/extreme:
     $ref: search/course/extreme.yml
   /v1/json/search/course/pattern:
     $ref: search/course/pattern.yml
-  /v1/json/course/shape:
-    $ref: search/course/shape.yml
+  /v1/json/station:
+    $ref: ./station.yml
+  /v1/json/station/light:
+    $ref: station/light.yml
   /v1/json/course/station:
     $ref: course/station.yml
   /v1/json/course/passStation:
     $ref: course/passStation.yml
-  /v1/json/station/light:
-    $ref: station/light.yml
-  /v1/json/course/edit:
-    $ref: course/edit.yml
   /v1/json/course/trainStation:
     $ref: course/trainStation.yml
-  /v1/json/station:
-    $ref: ./station.yml
+  /v1/json/course/shape:
+    $ref: search/course/shape.yml
+  /v1/json/course/edit:
+    $ref: course/edit.yml
