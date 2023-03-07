@@ -1,0 +1,48 @@
+get:
+  tags:
+    - ポートの情報
+  summary: ポート名や駅名の簡易情報
+  description: |-
+    ### 概要
+    任意の文字列から、シェアサイクル・オンデマンド交通のポートまたは駅情報を検索し情報を返します。<br>
+    主に候補ポートまたは候補駅の確定を想定しているため、必要最低限の簡易データのみ返します。また、一度に取得できる最大件数は30件です。
+  parameters:
+    - name: name
+      description: |-
+        **任意の文字列**。
+      in: query
+      required: true
+      schema:
+        type: string
+    - name: type
+      description: |-
+        駅すぱあとWebサービスの駅の[交通種別](https://docs.ekispert.com/v1/dictionary/type/)に加え、以下の交通種別を付与できます。[複数指定](http://docs.ekispert.com/v1/api/#%E8%A4%87%E6%95%B0%E6%8C%87%E5%AE%9A)可。
+        - `cycle`：シェアサイクルのポート
+        - `demand`：デマンドモビリティのポート
+      in: query
+      required: false
+      schema:
+        type: string
+  responses:
+    200:
+      description: |-
+        - 本APIのレスポンス構造は駅すぱあとWebサービスの[駅簡易情報](http://docs.ekispert.com/v1/api/station/light.html)に、ほぼ準じています。
+        - 測地系は世界測地系(wgs84)固定となります。
+
+        <table class="left">
+        <tr><th>Name</th><th>Description</th></tr>
+        <tr><th>ResultSet / apiVersion</th><th>WebAPIバージョン</th></tr>
+        <tr><th>ResultSet / engineVersion</th><th>エンジンバージョン</th></tr>
+        <tr><th>ResultSet / Point</th><th>ポートを表す要素(配列)</th></tr>
+        <tr><th>ResultSet / Point / Station</th><th>ポートや駅を表す要素</th></tr>
+        <tr><th>ResultSet / Point / Station / code</th><th>コード</th></tr>
+        <tr><th>ResultSet / Point / Station / Name</th><th>名称</th></tr>
+        <tr><th>ResultSet / Point / Station / Type</th><th>
+        交通種別を表す要素<br>駅すぱあとWebサービスの<a href="http://docs.ekispert.com/v1/dictionary/type/">交通種別</a>を表す値に加えて、以下の2種類が返ります。<br />- cycle: シェアサイクルのポート<br /> - demand: デマンドモビリティのポート
+        </th>
+        <tr><th>ResultSet / Point / Station / Yomi</th><th>読みがな</th></tr>
+        </tr>
+        <tr><th>ResultSet / Point / Prefecture</th><th>都道府県を表す要素</th></tr>
+        <tr><th>ResultSet / Point / Prefecture / code</th><th><a href="http://docs.ekispert.com/v1/dictionary/prefecture-code/">都道府県のコード</a></th></tr>
+        <tr><th>ResultSet / Point / Prefecture / name</th><th>都道府県の名称</th></tr>
+        </table>  
