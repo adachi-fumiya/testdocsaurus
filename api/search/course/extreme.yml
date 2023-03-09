@@ -1,6 +1,6 @@
 get:
   tags:
-    - 探索
+    - 探索test
   summary: "経路探索"
   description: |-
     ### 概要
